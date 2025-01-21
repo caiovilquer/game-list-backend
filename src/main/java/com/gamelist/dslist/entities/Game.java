@@ -2,12 +2,11 @@ package com.gamelist.dslist.entities;
 
 import java.util.Objects;
 
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Column;
 import jakarta.persistence.Table;
 
 @Entity
@@ -26,6 +25,8 @@ public class Game {
 	private Double score;
 	private String imgUrl;
 	private String shortDescription;
+	
+	@Column(columnDefinition = "TEXT")
 	private String longDescription;
 	
 	public Game() {
@@ -41,7 +42,7 @@ public class Game {
 		this.platform = platform;
 		this.score = score;
 		this.imgUrl = imgUrl;
-		this.shortDescription = shortDescription;
+		this.shortDescription = shortDescription;		
 		this.longDescription = longDescription;
 	}
 
