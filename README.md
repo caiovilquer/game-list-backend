@@ -18,7 +18,6 @@ O objetivo deste projeto é fornecer uma interface backend robusta para a manipu
 - **Java**: Linguagem de programação principal utilizada no desenvolvimento do backend.
 - **Spring Boot**: Framework que simplifica a criação de aplicações stand-alone e de produção em Spring.
 - **Maven**: Ferramenta de automação de compilação e gerenciamento de dependências, assegurando a consistência e reprodutibilidade do ambiente de desenvolvimento.
-  ```
   
 ## Considerações Finais
 
