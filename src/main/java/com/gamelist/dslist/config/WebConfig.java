@@ -11,13 +11,19 @@ public class WebConfig {
 
 	@Value("${cors.origins}")
 	private String corsOrigins;
-	
+
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedMethods("*").allowedOrigins(corsOrigins);
+				// registry.addMapping("/**").allowedOrigins("*");
+
+				registry.addMapping("/**")
+						.allowedOrigins("https://game-list-frontend-6t3qlpk3x-caiovilquers-projects.vercel.app")
+						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+						.allowedHeaders("*")
+						.allowCredentials(true);
 			}
 		};
 	}
