@@ -20,7 +20,7 @@ public class WebConfig {
 				// registry.addMapping("/**").allowedOrigins("*");
 
 				registry.addMapping("/**")
-						.allowedOrigins("https://game-list-frontend-6t3qlpk3x-caiovilquers-projects.vercel.app")
+						.allowedOrigins("https://game-list-frontend.vercel.app/")
 						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 						.allowedHeaders("*")
 						.allowCredentials(true);
