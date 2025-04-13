@@ -16,6 +16,7 @@ public class GameDTO {
 	private String imgUrl;
 	private String shortDescription;
 	private String longDescription;
+	private Long listId;
 
 	public GameDTO() {
 		
@@ -78,6 +79,6 @@ public class GameDTO {
 	public void setLongDescription(String longDescription) {
 		this.longDescription = longDescription;
 	}
-	
-	
+	public Long getListId() {return listId;}
+	public void setListId(Long listId) {this.listId = listId;}
 }

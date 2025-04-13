@@ -1,8 +1,12 @@
 package com.gamelist.dslist.services;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.gamelist.dslist.entities.Belonging;
+import com.gamelist.dslist.entities.GameList;
 import com.gamelist.dslist.repositories.BelongingRepository;
+import com.gamelist.dslist.repositories.GameListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,15 +17,15 @@ import com.gamelist.dslist.entities.Game;
 import com.gamelist.dslist.projections.GameMinProjection;
 import com.gamelist.dslist.repositories.GameRepository;
 
-import javax.crypto.ExemptionMechanismException;
-
 @Service
 public class GameService {
 	@Autowired
 	private GameRepository gameRepository;
 	@Autowired
 	private BelongingRepository belongingRepository;
-	
+	@Autowired
+	private GameListRepository gameListRepository;
+
 	@Transactional(readOnly = true)
 	public List<GameMinDTO> findAll(){
 		List<Game> result = gameRepository.findAll();
@@ -41,10 +45,17 @@ public class GameService {
 	}
 
 	@Transactional
-	public GameDTO insert(GameDTO dto) {
+	public GameDTO insert(GameDTO dto){
 		Game entity = new Game();
 		copyDtoToEntity(dto, entity);
 		entity = gameRepository.save(entity);
+		Optional<GameList> list = gameListRepository.findById(dto.getListId());
+		if (list.isPresent()) {
+			Integer maxPosition = belongingRepository.findMaxPositionByListId(list.get().getId());
+			int newPosition = (maxPosition != null ? maxPosition : 0) + 1;
+			Belonging belonging = new Belonging(entity, list.get(), newPosition);
+			belongingRepository.save(belonging);
+		}
 		return new GameDTO(entity);
 	}
 

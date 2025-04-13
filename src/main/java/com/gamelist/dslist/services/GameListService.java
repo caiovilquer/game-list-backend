@@ -2,6 +2,9 @@ package com.gamelist.dslist.services;
 
 import java.util.List;
 
+import com.gamelist.dslist.entities.Belonging;
+import com.gamelist.dslist.entities.Game;
+import com.gamelist.dslist.repositories.BelongingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +23,9 @@ public class GameListService {
 	
 	@Autowired
 	private GameRepository gameRepository;
+
+	@Autowired
+	private BelongingRepository belongingRepository;
 	
 	@Transactional(readOnly = true)
 	public List<GameListDTO> findAll(){
@@ -42,5 +48,13 @@ public class GameListService {
 			gameListRepository.updateBelongingPosition(listId, list.get(i).getId(), i);
 		}
 		
+	}
+	public Belonging insertBelonging(Game game, GameList list) {
+		// Consulta o máximo valor de position para o GameList específico
+		Integer maxPosition = belongingRepository.findMaxPositionByListId(list.getId());
+		int newPosition = (maxPosition != null ? maxPosition : 0) + 1;
+
+		Belonging belonging = new Belonging(game, list, newPosition);
+		return belongingRepository.save(belonging);
 	}
 }
