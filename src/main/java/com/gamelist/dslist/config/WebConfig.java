@@ -10,17 +10,21 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig {
 
 	@Value("${cors.origins}")
-	private String corsOrigins;
 
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				// registry.addMapping("/**").allowedOrigins("*");
 
 				registry.addMapping("/**")
 						.allowedOrigins("https://game-list-frontend.vercel.app/")
+						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+						.allowedHeaders("*")
+						.allowCredentials(true);
+
+				registry.addMapping("/**")
+						.allowedOrigins("https://gamelist.vilquer.dev/")
 						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 						.allowedHeaders("*")
 						.allowCredentials(true);
